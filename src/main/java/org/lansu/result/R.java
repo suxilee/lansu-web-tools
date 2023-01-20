@@ -13,15 +13,14 @@ import java.util.stream.Collectors;
  * @author lansu
  * @date 2023/01/14
  */
-@Data
-public class R implements ResultCode {
+public class R<T> implements ResultCode {
     private Boolean success;
 
     private Integer code;
 
     private String message;
 
-    private Object data;
+    private T data;
 
 
     private R() {
@@ -32,11 +31,11 @@ public class R implements ResultCode {
      *
      * @return {@link R}
      */
-    public static R ok() {
-        R r = new R();
-        r.setSuccess(ResultCodeEnum.SUCCESS.getSuccess());
-        r.setCode(ResultCodeEnum.SUCCESS.getCode());
-        r.setMessage(ResultCodeEnum.SUCCESS.getMessage());
+    public static <T> R<T> ok() {
+        R<T> r = new R<T>();
+        r.success = ResultCodeEnum.SUCCESS.getSuccess();
+        r.code = ResultCodeEnum.SUCCESS.getCode();
+        r.message = ResultCodeEnum.SUCCESS.getMessage();
         return r;
     }
 
@@ -46,11 +45,11 @@ public class R implements ResultCode {
      *
      * @return {@link R}
      */
-    public static R failed() {
-        R r = new R();
-        r.setSuccess(ResultCodeEnum.FAILED.getSuccess());
-        r.setCode(ResultCodeEnum.FAILED.getCode());
-        r.setMessage(ResultCodeEnum.FAILED.getMessage());
+    public static <T> R<T> failed() {
+        R<T> r = new R<T>();
+        r.success = ResultCodeEnum.FAILED.getSuccess();
+        r.code = ResultCodeEnum.FAILED.getCode();
+        r.message = ResultCodeEnum.FAILED.getMessage();
         return r;
     }
 
@@ -60,11 +59,11 @@ public class R implements ResultCode {
      *
      * @return {@link R}
      */
-    public static R error() {
-        R r = new R();
-        r.setSuccess(ResultCodeEnum.ERROR.getSuccess());
-        r.setCode(ResultCodeEnum.ERROR.getCode());
-        r.setMessage(ResultCodeEnum.ERROR.getMessage());
+    public static <T> R<T> error() {
+        R<T> r = new R<T>();
+        r.success = ResultCodeEnum.ERROR.getSuccess();
+        r.code = ResultCodeEnum.ERROR.getCode();
+        r.message = ResultCodeEnum.ERROR.getMessage();
         return r;
     }
 
@@ -76,11 +75,11 @@ public class R implements ResultCode {
      * @param resultCode 结果代码
      * @return {@link R}
      */
-    public static R result(ResultCode resultCode) {
-        R r = new R();
-        r.setSuccess(resultCode.getSuccess());
-        r.setCode(resultCode.getCode());
-        r.setMessage(resultCode.getMessage());
+    public static <T> R<T> result(ResultCode resultCode) {
+        R<T> r = new R<T>();
+        r.success = resultCode.getSuccess();
+        r.code = resultCode.getCode();
+        r.message = resultCode.getMessage();
         return r;
     }
 
@@ -92,8 +91,8 @@ public class R implements ResultCode {
      * @param message 消息
      * @return {@link R}
      */
-    public R message(String message) {
-        this.setMessage(message);
+    public R<T> message(String message) {
+        this.message = message;
         return this;
     }
 
@@ -104,48 +103,27 @@ public class R implements ResultCode {
      * @param data 数据
      * @return {@link R}
      */
-    public R data(Object data) {
-        this.setData(data);
+    public R<T> data(T data) {
+        this.data = data;
         return this;
     }
 
-    /**
-     * 数据
-     * 多数据处理
-     *
-     * @param data 数据
-     * @return {@link R}
-     */
-    public R data(Object... data) {
-        List<Object> collect = Arrays.stream(data).collect(Collectors.toList());
-        this.setData(collect);
-        return this;
+    @Override
+    public Boolean getSuccess() {
+        return success;
     }
 
-    /**
-     * 数据
-     * 键值对格式
-     *
-     * @param key   钥匙
-     * @param value 值
-     * @return {@link R}
-     */
-    public R data(String key, Object value) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(key, value);
-        this.setData(map);
-        return this;
+    @Override
+    public Integer getCode() {
+        return code;
     }
 
-    /**
-     * 数据
-     * 键值对格式
-     *
-     * @param map 地图
-     * @return {@link R}
-     */
-    public R data(Map<String, Object> map) {
-        this.setData(map);
-        return this;
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    public T getData() {
+        return data;
     }
 }

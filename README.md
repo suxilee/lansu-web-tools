@@ -22,9 +22,9 @@ R res = R.ok().message("响应测试");
 
 ```java
 //生成ID 53bit
-Snowflake.getInstance().nextId();
-//生成id 64bit
-Sonwflake.getInstance64().nextId64();
+SnowflakeUtils.getInstance().nextId();
+//生成ID 64bit
+SnowflakeUtils.getInstance64().nextId64();
 ```
 ## 3.自定义异常WebException.class
 ```java

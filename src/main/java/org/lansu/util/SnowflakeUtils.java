@@ -1,4 +1,4 @@
-package org.lansu.utils;
+package org.lansu.util;
 
 /**
  * 雪花id生成器
@@ -9,7 +9,7 @@ package org.lansu.utils;
  * @link https://juejin.cn/post/6844903981886472206#heading-0 文章参考
  * @date 2023/01/14
  */
-public class Snowflake {
+public class SnowflakeUtils {
 
     ////////////////////////////////  53bit常量参数  ////////////////////////////////
     /**
@@ -71,7 +71,7 @@ public class Snowflake {
      */
     private static long sequenceBak = 0L;
 
-    private static final Snowflake SNOWFLAKE = null;
+    private static final SnowflakeUtils SNOWFLAKE = null;
 
 
     //////////////////////////////// 64bit常量参数 ////////////////////////////////
@@ -127,16 +127,16 @@ public class Snowflake {
     /**
      * 私有化构造
      */
-    private Snowflake() {
+    private SnowflakeUtils() {
 
     }
 
     /**
      * 对外提供实例获取
      *
-     * @return {@link Snowflake} 返回实例对象
+     * @return {@link SnowflakeUtils} 返回实例对象
      */
-    public static Snowflake getInstance() {
+    public static SnowflakeUtils getInstance() {
         return getInstance(0);
     }
 
@@ -144,17 +144,17 @@ public class Snowflake {
      * get实例
      *
      * @param workerId 机器id
-     * @return {@link Snowflake}
+     * @return {@link SnowflakeUtils}
      */
-    public static Snowflake getInstance(long workerId) {
+    public static SnowflakeUtils getInstance(long workerId) {
         return getInstance(workerId, WORKER_ID_MAX);
     }
 
-    public static Snowflake getInstance64() {
+    public static SnowflakeUtils getInstance64() {
         return getInstance64(0);
     }
 
-    public static Snowflake getInstance64(long workerId) {
+    public static SnowflakeUtils getInstance64(long workerId) {
         //64bit 机器id校验
         return getInstance(workerId, WORKER_ID_MAX_64);
     }
@@ -164,9 +164,9 @@ public class Snowflake {
      *
      * @param workerId 机器id
      * @param maxId    最大id
-     * @return {@link Snowflake}
+     * @return {@link SnowflakeUtils}
      */
-    private static Snowflake getInstance(long workerId, long maxId) {
+    private static SnowflakeUtils getInstance(long workerId, long maxId) {
         // 机器id校验
         if (workerId > maxId || workerId < 0) {
             throw new IllegalArgumentException("workerId must be between 0 and " + WORKER_ID_MAX);
@@ -174,9 +174,9 @@ public class Snowflake {
         WORKER_ID = workerId;
         //双重校验锁
         if (SNOWFLAKE == null) {
-            synchronized (Snowflake.class) {
+            synchronized (SnowflakeUtils.class) {
                 if (SNOWFLAKE == null) {
-                    return new Snowflake();
+                    return new SnowflakeUtils();
                 }
             }
         }

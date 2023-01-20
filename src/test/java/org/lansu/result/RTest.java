@@ -8,7 +8,7 @@ class RTest {
 
     @Test
     void ok() {
-        R r = R.ok();
+        R<Object> r = R.ok();
         assertTrue(r.getSuccess());
         assertEquals(200, r.getCode());
         assertEquals("成功", r.getMessage());
@@ -16,7 +16,7 @@ class RTest {
 
     @Test
     void failed() {
-        R r = R.failed();
+        R<Object> r = R.failed();
         assertFalse(r.getSuccess());
         assertEquals(400, r.getCode());
         assertEquals("失败", r.getMessage());
@@ -24,7 +24,7 @@ class RTest {
 
     @Test
     void error() {
-        R r = R.error();
+        R<Object> r = R.error();
         assertFalse(r.getSuccess());
         assertEquals(500, r.getCode());
         assertEquals("系统错误", r.getMessage());
@@ -32,7 +32,7 @@ class RTest {
 
     @Test
     void result() {
-        R r = R.result(ResultCodeEnum.SUCCESS);
+        R<Object> r = R.result(ResultCodeEnum.SUCCESS);
         assertTrue(r.getSuccess());
         assertEquals(200, r.getCode());
         assertEquals("成功", r.getMessage());
@@ -40,7 +40,7 @@ class RTest {
 
     @Test
     void message() {
-        R r = R.ok().message("自定义消息");
+        R<Object> r = R.ok().message("自定义消息");
         assertTrue(r.getSuccess());
         assertEquals(200, r.getCode());
         assertEquals("自定义消息", r.getMessage());
@@ -48,7 +48,7 @@ class RTest {
 
     @Test
     void data() {
-        R r = R.ok().data("自定义数据");
+        R<Object> r = R.ok().data("自定义数据");
         assertTrue(r.getSuccess());
         assertEquals(200, r.getCode());
         assertEquals("成功", r.getMessage());

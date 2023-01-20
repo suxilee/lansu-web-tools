@@ -9,7 +9,6 @@ import org.lansu.result.ResultCode;
  * @author lansu
  * @date 2023/01/14
  */
-@Data
 public class WebException extends RuntimeException implements ResultCode {
     private Integer code;
 
